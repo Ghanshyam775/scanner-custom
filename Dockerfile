@@ -1,20 +1,20 @@
-# Use an official Python runtime as a parent image
+# Use an official Python image
 FROM python:3.9-slim
 
-# Install system-level dependencies
-RUN apt-get update && apt-get install -y libzbar0
-
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the project files into the container
-COPY . .
+# Copy the requirements file into the container
+COPY requirements.txt /app/
 
-# Install Python dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port Flask will run on (Render assigns a dynamic port)
-EXPOSE 5000
+# Copy the application code into the container
+COPY . /app/
 
-# Define the command to run your Flask app
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Command to run the application
 CMD ["python", "app.py"]
